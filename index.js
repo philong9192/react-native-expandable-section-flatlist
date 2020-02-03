@@ -123,13 +123,14 @@ class ExpandableList extends Component {
     }
 
     return (
-      <View onLayout={this._itemLayout}>
+      <View onLayout={this._itemLayout} key={index}>
         <TouchableOpacity onPress={() => this._onPress(sectionId)}>
-          { renderSectionHeaderX ? renderSectionHeaderX(item[headerKey], sectionId,
+        { renderSectionHeaderX ? renderSectionHeaderX(item, item[headerKey], sectionId,
               !!this.state.memberOpened.get(sectionId)) : null}
         </TouchableOpacity>
         <ScrollView
-          scrollEnabled={false}
+          scrollEnabled={true}
+          key={index}
           contentContainerStyle={this.props.rowEnabled ? styles.row : null}
         >
           {
@@ -160,6 +161,7 @@ class ExpandableList extends Component {
     return (
       <FlatList
         keyExtractor={this._keyExtractor}
+        listKey = {this._keyExtractor}
         extraData={this.state}
         initialNumToRender={dataSource.length || 0}
         {...this.props}
